@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.deguibert.todolist.model.User;
-import com.deguibert.todolist.repository.UserRepository;
+import com.deguibert.todolist.service.UserService;
 
 @RestController
 public class AuthenticationController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	
-	@Autowired
+	@Autowired(required = false)
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("/register")
@@ -30,7 +30,7 @@ public class AuthenticationController {
 	public String processRegister(User user) {
 		if (user != null) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			userRepository.save(user);
+			userService.saveUser(user);
 			return "User "+user.getLogin()+" registered";
 		} else {
 			return "Invalid User";
