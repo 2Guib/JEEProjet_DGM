@@ -1,4 +1,4 @@
-package com.deguibert.todolist.authentication;
+package com.deguibert.todolist.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.deguibert.todolist.authentication.UserDetailsServiceImpl;
 
 @Configuration @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
@@ -40,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/register", "/process_register").permitAll()
+			.antMatchers("/register", "/process_register", "/package/**").permitAll()
 			.anyRequest().authenticated()
 			.and().
 			formLogin().permitAll()
