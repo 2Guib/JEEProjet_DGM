@@ -15,16 +15,28 @@ import com.deguibert.todolist.authentication.UserDetailsServiceImpl;
 @Configuration @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
+	/**
+	 * Gives a new UserDetail Service for authentication
+	 * @return a new UserDetailsService
+	 */
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
 	
+	/**
+	 * Gives a password encoder
+	 * @return a new BCryptPasswordEncoder
+	 */
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
+	/**
+	 * Generate a DaoAuthenticationProvider with the correct User Service and password encoder
+	 * @return a parameterized DaoAuthenticationProvider
+	 */
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

@@ -24,7 +24,7 @@ public class UserService {
 	 * @param id the id of the desired user
 	 * @return the user found
 	 */
-	public Optional<User> getUser(int id) {
+	public User getUser(int id) {
 		return userRepository.findById(id);
 	}
 	

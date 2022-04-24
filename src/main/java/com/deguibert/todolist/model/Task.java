@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity @Table(name = "tasks")
 public class Task {
 
@@ -23,11 +25,13 @@ public class Task {
 	private String title;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date last_change;
 
 	private boolean done;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date planned_close_date;
 	
 	private String description;
@@ -41,6 +45,11 @@ public class Task {
 	@ManyToMany
 	@JoinTable(name = "affected", joinColumns = @JoinColumn ( name = "id_task" ), inverseJoinColumns = @JoinColumn ( name = "id_tag"))
 	private List<Tag> tags;
+	
+	@Override
+	public String toString() {
+		return this.title;
+	}
 
 	public int getId_task() {
 		return id_task;

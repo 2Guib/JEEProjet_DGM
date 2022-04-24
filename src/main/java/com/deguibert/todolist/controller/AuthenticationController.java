@@ -19,13 +19,22 @@ public class AuthenticationController {
 	@Autowired(required = false)
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	/**
+	 * Link to the register for page
+	 * @return the model and view of the register page
+	 */
 	@GetMapping("/register")
 	public ModelAndView viewRegister() {
-		ModelAndView modelAndView = new ModelAndView("register");
+		ModelAndView modelAndView = new ModelAndView("form/register");
 		modelAndView.getModelMap().addAttribute("user", new User());
 		return modelAndView;
 	}
 	
+	/**
+	 * Processes the registration of a user
+	 * @param user the user to register
+	 * @return 
+	 */
 	@PostMapping("/process_register")
 	public String processRegister(User user) {
 		if (user != null) {
