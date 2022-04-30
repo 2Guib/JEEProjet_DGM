@@ -11,7 +11,7 @@ import com.deguibert.todolist.model.User;
 import com.deguibert.todolist.service.UserService;
 
 @RestController
-public class AuthenticationController {
+public class RegisterController {
 
 	@Autowired
 	private UserService userService;
@@ -25,7 +25,7 @@ public class AuthenticationController {
 	 */
 	@GetMapping("/register")
 	public ModelAndView viewRegister() {
-		ModelAndView modelAndView = new ModelAndView("form/register");
+		ModelAndView modelAndView = new ModelAndView("register");
 		modelAndView.getModelMap().addAttribute("user", new User());
 		return modelAndView;
 	}

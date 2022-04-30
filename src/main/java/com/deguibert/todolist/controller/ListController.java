@@ -26,7 +26,7 @@ public class ListController {
 	 */
 	@GetMapping("/list")
 	public ModelAndView viewList(@AuthenticationPrincipal UserDetailsImpl userDetail) {
-		ModelAndView modelAndView = new ModelAndView("list");
+		ModelAndView modelAndView = new ModelAndView("task/list");
 		User user = userService.getUser(userDetail.getUser().getId_user());
 		if (user != null) {
 			modelAndView.getModelMap().addAttribute("user", user);

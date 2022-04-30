@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un compte</title>
+    
+	<!-- Import styles custom -->
+	<link th:href="@{/style/utilities.css}" rel="stylesheet" media="screen"/>
+	
+    <!-- Import Bootstrap -->
+    <link th:href="@{/package/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script th:src="@{/package/jquery/jquery.min.js}"></script>  
+    <script th:src="@{/package/popper/popper.min.js}"></script>  
+    <script th:src="@{/package/bootstrap/js/bootstrap.min.js}"></script>  
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-center mw-600">
+		<div class="mt-3">
+            <h1 class="text-center">Créer un compte :</h1>
+        </div>
+        <form th:action="@{/process_register}" th:object="${user}" method="post" class="mt-5">
+            <div class="form-group row">
+                <label class="col-3 col-form-label text-right" for="login">Login : </label>
+                <div class="col-6">
+                    <input type="text" th:field="*{login}" id="login" name="username" class="form-control" required />
+                </div>
+            </div>
+             
+            <div class="form-group row">
+                <label class="col-3 col-form-label text-right" for="password">Mot de passe : </label>
+                <div class="col-6">
+                    <input type="password" th:field="*{password}" id="password" name="password" class="form-control" required/>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <button type="submit" class="btn btn-primary btn-block col-3">Créer le compte</button>
+            </div>
+        </form>
+	</div>
+</body>
+</html>

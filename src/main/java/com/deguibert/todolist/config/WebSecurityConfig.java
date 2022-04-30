@@ -53,11 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.formLogin().loginPage("/login").defaultSuccessUrl("/", true);
+		
 		http.authorizeRequests()
-			.antMatchers("/register", "/process_register", "/package/**").permitAll()
+			.antMatchers("/register", "/process_register", "/package/**", "/style/**").permitAll()
 			.anyRequest().authenticated()
-			.and().
-			formLogin().permitAll()
+			.and()
+			.formLogin().permitAll()
 			.and()
 			.logout().permitAll();
 	}

@@ -26,7 +26,7 @@ public class TaskController {
 	
 	@GetMapping("/create-task")
 	public ModelAndView viewCreateTask(@AuthenticationPrincipal UserDetailsImpl userDetail) {
-		ModelAndView modelAndView = new ModelAndView("form/update-task");
+		ModelAndView modelAndView = new ModelAndView("task/update-task");
 		modelAndView.getModelMap().addAttribute("task", new Task());
 		modelAndView.getModelMap().addAttribute("title", "Créer une tache");
 		return modelAndView;
@@ -34,7 +34,7 @@ public class TaskController {
 	
 	@GetMapping("/update-task")
 	public ModelAndView viewUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, @RequestParam int id) {
-		ModelAndView modelAndView = new ModelAndView("form/update-task");
+		ModelAndView modelAndView = new ModelAndView("task/update-task");
 		Task task = taskService.getTask(id);
 		if (task != null) {
 			modelAndView.getModelMap().addAttribute("task", task);
