@@ -34,6 +34,10 @@ public class Task {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date planned_close_date;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date close_date;
+	
 	private String description;
 	
 	private String img;
@@ -124,7 +128,14 @@ public class Task {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-	
+
+	public Date getClose_date() {
+		return close_date;
+	}
+
+	public void setClose_date(Date close_date) {
+		this.close_date = close_date;
+	}
 	
 	
 }

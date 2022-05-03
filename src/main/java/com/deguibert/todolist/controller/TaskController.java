@@ -55,4 +55,14 @@ public class TaskController {
 			return "Tache " + task.getTitle() + "sauvegardée";
 		}
 	}
+	
+	@PostMapping("/process_switch_done")
+	public String processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, @RequestParam int id) {
+		Task task = taskService.switchTaskDone(id);
+		if (task == null) {
+			return "Echec de sauvegarde de tache";
+		} else {
+			return "Tache " + task.getTitle() + "sauvegardée";
+		}
+	}
 }

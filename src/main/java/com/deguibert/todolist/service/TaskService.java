@@ -43,5 +43,19 @@ public class TaskService {
 		return taskRepository.save(task);
 	}
 	
+	/**
+	 * Switch if the task is done or not
+	 * @param id id of the task to update 
+	 * @return the actual task updated
+	 */
+	public Task switchTaskDone(int id) {
+		Task t = this.getTask(id);
+		if(t != null) {
+			t.setDone(!t.isDone());
+			t.setClose_date(t.isDone() ? new Date() : null);
+			t = this.updateTask(t);
+		}
+		return t;
+	}
 	
 }
