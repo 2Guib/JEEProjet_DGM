@@ -16,6 +16,7 @@ import com.deguibert.todolist.authentication.UserDetailsImpl;
 import com.deguibert.todolist.model.Task;
 import com.deguibert.todolist.model.User;
 import com.deguibert.todolist.repository.TaskRepository;
+import com.deguibert.todolist.service.TagsService;
 import com.deguibert.todolist.service.TaskService;
 
 @RestController
@@ -24,11 +25,15 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
+	@Autowired
+	private TagsService tagsService;
+	
 	@GetMapping("/create-task")
 	public ModelAndView viewCreateTask(@AuthenticationPrincipal UserDetailsImpl userDetail) {
 		ModelAndView modelAndView = new ModelAndView("task/update-task");
 		modelAndView.getModelMap().addAttribute("task", new Task());
 		modelAndView.getModelMap().addAttribute("title", "Créer une tache");
+		modelAndView.getModelMap().addAttribute("tags", tagsService.getTags());
 		return modelAndView;
 	}
 	
@@ -39,6 +44,7 @@ public class TaskController {
 		if (task != null) {
 			modelAndView.getModelMap().addAttribute("task", task);
 			modelAndView.getModelMap().addAttribute("title", "Mettre a jour une tache");
+			modelAndView.getModelMap().addAttribute("tags", tagsService.getTags());
 		} else {
 			modelAndView.setView(new RedirectView("/create-task"));
 		}
