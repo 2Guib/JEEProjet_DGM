@@ -11,14 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.deguibert.todolist.authentication.UserDetailsImpl;
 import com.deguibert.todolist.model.User;
 import com.deguibert.todolist.repository.UserRepository;
+import com.deguibert.todolist.service.TaskService;
 import com.deguibert.todolist.service.UserService;
 
 @RestController
 public class ListController {
 	
-	@Autowired
-	private UserService userService;
 
+	@Autowired
+	private TaskService taskService;
+	
 	/**
 	 * Link the list page that shows all tasks of the logged in user
 	 * @param userDetail the logged in user
@@ -27,9 +29,10 @@ public class ListController {
 	@GetMapping("/list")
 	public ModelAndView viewList(@AuthenticationPrincipal UserDetailsImpl userDetail) {
 		ModelAndView modelAndView = new ModelAndView("task/list");
-		User user = userService.getUser(userDetail.getUser().getId_user());
+		User user = userDetail.getUser();
 		if (user != null) {
 			modelAndView.getModelMap().addAttribute("user", user);
+			modelAndView.getModelMap().addAttribute("tasks", taskService.getTasks(user));
 		}
 		return modelAndView;
 	}

@@ -1,6 +1,12 @@
 package com.deguibert.todolist.service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +20,7 @@ public class TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	
 	
 	/**
 	 * Returns the desired tast from the database
@@ -29,8 +36,10 @@ public class TaskService {
 	 * @param user the author of the tasks
 	 * @return the list of all users
 	 */
-	public Iterable<Task> getTasks(User user) {
-		return taskRepository.findAllByUser(user);
+	public List<Task> getTasks(User user) {
+		List<Task> tasks = taskRepository.findAllByUser(user);
+		Collections.sort(tasks);
+		return tasks;
 	}
 
 	/**

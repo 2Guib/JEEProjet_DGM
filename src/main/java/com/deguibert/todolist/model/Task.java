@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity @Table(name = "tasks")
-public class Task {
+public class Task implements Comparable<Task>{
 
 	@Id @GeneratedValue
 	private int id_task;
@@ -53,6 +53,29 @@ public class Task {
 	@Override
 	public String toString() {
 		return this.title;
+	}
+	
+	@Override
+	public int compareTo(Task t) {
+		//On compare si la tache est finie
+		int comp = Boolean.compare(this.isDone(), t.isDone());
+		
+		if (comp == 0 && !this.isDone()) {
+			//Si les deux non finie on compare par date prévue de fermeture si existante
+			comp = Boolean.compare(this.getPlanned_close_date() == null, t.getPlanned_close_date() == null);
+			if (comp == 0 && this.getPlanned_close_date() != null) {
+				comp = this.getPlanned_close_date().compareTo(t.getPlanned_close_date());
+			}
+		} else if (comp == 0 && this.isDone() ) {
+			//Si les deux finie on compare par date de cloture
+			comp = this.getClose_date().compareTo(t.getClose_date());
+		}
+		
+		//Si equivalente on compare par titre
+		if (comp == 0) {
+			comp = this.getTitle().compareTo(t.getTitle());
+		}
+		return comp;
 	}
 
 	public int getId_task() {
@@ -136,6 +159,4 @@ public class Task {
 	public void setClose_date(Date close_date) {
 		this.close_date = close_date;
 	}
-	
-	
 }

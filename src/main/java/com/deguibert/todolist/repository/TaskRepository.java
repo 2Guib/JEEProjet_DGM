@@ -1,5 +1,7 @@
 package com.deguibert.todolist.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +23,5 @@ public interface TaskRepository extends CrudRepository<Task, Integer> {
 	 * @param id_user id of the user
 	 * @return tasks found
 	 */
-	public Iterable<Task> findAllByUser(User user);
+	public List<Task> findAllByUser(User user);
 }

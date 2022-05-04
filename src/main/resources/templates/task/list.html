@@ -18,7 +18,7 @@
 		<h1 class="mb-5">Liste des taches de <span th:text="${user.login}"></span></h1>
 		
 		<table class="table">
-			<tr th:each="task : ${user.tasks}" class="row align-item-center" th:classappend="${task.done} ? table-primary">
+			<tr th:each="task : ${tasks}" class="row align-item-center" th:classappend="${task.done} ? table-primary">
 				<td class="col-auto d-flex align-items-center">
 					<form method="post" th:action="@{/process_switch_done(id=${task.id_task})}">
 						<input type="checkbox" th:checked="${task.done}" onChange="this.form.submit()">
