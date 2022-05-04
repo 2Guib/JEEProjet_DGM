@@ -52,23 +52,15 @@ public class TaskController {
 	}
 	
 	@PostMapping("/process_update_task")
-	public String processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, Task task) {
+	public RedirectView processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, Task task) {
 		task.setUser(userDetail.getUser());
-		task = taskService.updateTask(task);
-		if (task == null) {
-			return "Echec de sauvegarde de tache";
-		} else {
-			return "Tache " + task.getTitle() + "sauvegardée";
-		}
+		taskService.updateTask(task);
+		return new RedirectView("/list");
 	}
 	
 	@PostMapping("/process_switch_done")
-	public String processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, @RequestParam int id) {
-		Task task = taskService.switchTaskDone(id);
-		if (task == null) {
-			return "Echec de sauvegarde de tache";
-		} else {
-			return "Tache " + task.getTitle() + "sauvegardée";
-		}
+	public RedirectView processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, @RequestParam int id) {
+		taskService.switchTaskDone(id);
+		return new RedirectView("/list");
 	}
 }

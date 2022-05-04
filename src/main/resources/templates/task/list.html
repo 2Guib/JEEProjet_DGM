@@ -4,16 +4,50 @@
     <meta charset="UTF-8">
     <title>ToDo List</title>
     
+    <!-- Import styles custom -->
+	<link th:href="@{/style/utilities.css}" rel="stylesheet" media="screen"/>
+    
     <!-- Import Bootstrap -->
     <link th:href="@{/package/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
     <script th:src="@{/package/jquery/jquery.min.js}"></script>  
     <script th:src="@{/package/popper/popper.min.js}"></script>  
     <script th:src="@{/package/bootstrap/js/bootstrap.min.js}"></script>  
 </head>
-<body>
-	<h2 th:text="${user.login}"></h2>
-	<h2 th:text="${user.tasks}"></h2>
-	<ul>
-	</ul>
+<body class="d-flex justify-content-center">
+	<div class="container mx-5 mt-3">
+		<h1 class="mb-5">Liste des taches de <span th:text="${user.login}"></span></h1>
+		
+		<table class="table">
+			<tr th:each="task : ${user.tasks}" class="row align-item-center" th:classappend="${task.done} ? table-primary">
+				<td class="col-auto d-flex align-items-center">
+					<form method="post" th:action="@{/process_switch_done(id=${task.id_task})}">
+						<input type="checkbox" th:checked="${task.done}" onChange="this.form.submit()">
+					</form>
+				</td>
+				<td class="col d-flex align-items-center">
+					<p th:text="${task.title}" class="mb-0" th:classappend="${task.done} ? text-line"></p>
+				</td>
+				<td class="col-2">
+					<span class="badge badge-pill badge-secondary mr-1" th:each="tag : ${task.tags}" th:text="${tag.title}"></span>
+				</td>
+				<td class="col-2 d-flex align-items-center">
+					<p th:if="${task.planned_close_date} != null" class="mb-0">A finir avant le : <span th:text="${#dates.format(task.planned_close_date, 'dd/MM/yyyy')}"></span></p>
+				</td>
+				<td class="col-2 d-flex align-items-center">
+					<p th:if="!${task.done}" class="mb-0">Modifié le :<br /><span th:text="${#dates.format(task.last_change, 'dd/MM/yyyy')}"></span></p>
+					<p th:if="${task.done}" class="mb-0">Fini le :<br /><span th:text="${#dates.format(task.close_date, 'dd/MM/yyyy')}"></span></p>
+				</td>
+				<td class="col-auto d-flex align-items-center">
+					<a class="btn btn-primary" th:href="@{/update-task(id=${task.id_task})}">Modifier</a>
+				</td>
+			</tr>
+		</table>
+		
+		<div class="row flex-row-reverse">
+			<div class="col-auto">
+				<a class="btn btn-outline-secondary" th:href="@{/create-task}">Ajouter une tache</a>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

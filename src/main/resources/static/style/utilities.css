@@ -3,3 +3,7 @@
 .mw-600 {
 	max-width: 600px !important;
 }
+
+.text-line {
+	text-decoration: line-through;
+}
