@@ -26,6 +26,10 @@ public class Task implements Comparable<Task>{
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date creation;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date last_change;
 
 	private boolean done;
@@ -159,4 +163,13 @@ public class Task implements Comparable<Task>{
 	public void setClose_date(Date close_date) {
 		this.close_date = close_date;
 	}
+
+	public Date getCreation() {
+		return creation;
+	}
+
+	public void setCreation(Date creation) {
+		this.creation = creation;
+	}
+	
 }

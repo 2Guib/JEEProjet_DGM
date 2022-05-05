@@ -34,12 +34,25 @@ public class TaskService {
 	/**
 	 * Returns a list of all tasks corresponding to the user
 	 * @param user the author of the tasks
-	 * @return the list of all users
+	 * @return the list of tasks of the user
 	 */
 	public List<Task> getTasks(User user) {
 		List<Task> tasks = taskRepository.findAllByUser(user);
 		Collections.sort(tasks);
 		return tasks;
+	}
+	
+	/**
+	 * Returns a list of all tasks corresponding to the user and filters it by query
+	 * @param user the author of the tasks
+	 * @param query query for the title of the task
+	 * @param begin min creation date
+	 * @param end max creation date
+	 * @return the list of tasks of the user filtered by name and date
+	 */
+	public List<Task> getTasks(User user, String query, Date begin, Date end) {
+		List<Task> tasks = this.getTasks(user);
+		return filterTasks(tasks, query, begin, end);
 	}
 
 	/**
@@ -65,6 +78,19 @@ public class TaskService {
 			t = this.updateTask(t);
 		}
 		return t;
+	}
+	
+	private List<Task> filterTasks(List<Task> tasks, String query, Date begin, Date end) {
+		if (query != null) {
+			tasks.removeIf(t -> !t.getTitle().toUpperCase().contains(query.toUpperCase()));
+		}
+		if (begin != null) {
+			tasks.removeIf(t -> t.getCreation().before(begin));
+		}
+		if (end != null) {
+			tasks.removeIf(t -> t.getCreation().after(end));
+		}
+		return tasks;
 	}
 	
 }

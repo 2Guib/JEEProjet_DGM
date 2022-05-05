@@ -1,5 +1,6 @@
 package com.deguibert.todolist.controller;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class TaskController {
 	
 	@PostMapping("/process_update_task")
 	public RedirectView processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, Task task) {
+		if (task.getCreation() == null) {
+			task.setCreation(new Date());
+		}
 		task.setUser(userDetail.getUser());
 		taskService.updateTask(task);
 		return new RedirectView("/list");
