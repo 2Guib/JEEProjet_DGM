@@ -1,12 +1,8 @@
 package com.deguibert.todolist.service;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,9 +46,9 @@ public class TaskService {
 	 * @param end max creation date
 	 * @return the list of tasks of the user filtered by name and date
 	 */
-	public List<Task> getTasks(User user, String query, Date begin, Date end) {
+	public List<Task> getTasks(User user, String query, Date begin, Date end, int[] qtags) {
 		List<Task> tasks = this.getTasks(user);
-		return filterTasks(tasks, query, begin, end);
+		return filterTasks(tasks, query, begin, end, qtags);
 	}
 
 	/**
@@ -80,7 +76,7 @@ public class TaskService {
 		return t;
 	}
 	
-	private List<Task> filterTasks(List<Task> tasks, String query, Date begin, Date end) {
+	private List<Task> filterTasks(List<Task> tasks, String query, Date begin, Date end, int[] qtags) {
 		if (query != null) {
 			tasks.removeIf(t -> !t.getTitle().toUpperCase().contains(query.toUpperCase()));
 		}
@@ -90,7 +86,11 @@ public class TaskService {
 		if (end != null) {
 			tasks.removeIf(t -> t.getCreation().after(end));
 		}
+		if (qtags != null) {
+			tasks.removeIf(t -> !t.containsOneTag(qtags));
+		}
 		return tasks;
 	}
+	
 	
 }

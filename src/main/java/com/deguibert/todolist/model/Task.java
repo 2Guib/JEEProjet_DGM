@@ -44,8 +44,6 @@ public class Task implements Comparable<Task>{
 	
 	private String description;
 	
-	private String img;
-	
 	@ManyToOne 
     @JoinColumn( name="id_user", nullable=false )
 	private User user;
@@ -82,6 +80,32 @@ public class Task implements Comparable<Task>{
 		return comp;
 	}
 
+	/**
+	 * Checks if the task contains a specific tag by id
+	 * @param tagId id of the tag
+	 * @return true if the task has this tag
+	 */
+	public boolean containsTag(int tagId) {
+		if (this.getTags() == null) {
+			return false;
+		}
+		return this.getTags().stream().filter(t -> t.getId_tag() == tagId).findFirst().isPresent();
+	}
+	
+	/**
+	 * Checks if the task contains at least one of the desired tags
+	 * @param tags list of desired tags ids
+	 * @return true of the task has one of the tags
+	 */
+	public boolean containsOneTag (int[] tags) {
+		for (int tag : tags) {
+			if (this.containsTag(tag)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getId_task() {
 		return id_task;
 	}
@@ -130,14 +154,6 @@ public class Task implements Comparable<Task>{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getImg() {
-		return img;
-	}
-
-	public void setImg(String img) {
-		this.img = img;
 	}
 
 	public User getUser() {
