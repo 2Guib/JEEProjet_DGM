@@ -15,7 +15,16 @@
 </head>
 <body class="d-flex justify-content-center">
 	<div class="container mx-5 mt-3">
-		<h1 class="mb-5">Liste des taches de <span th:text="${user.login}"></span></h1>
+		<div class="row">
+			<div class="col">
+				<h1 class="mb-5">Liste des taches de <span th:text="${user.login}"></span></h1>
+			</div>
+			<div class="col-auto">
+				<form method="post" th:action="@{/logout}">
+					<button type="submit" class="btn btn-outline-primary">Déconnextion</button>
+				</form>
+			</div>
+		</div>
 		
 		<div class="container mb-3">
 			<a class="btn btn-secondary mb-2" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">

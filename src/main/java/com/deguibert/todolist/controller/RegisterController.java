@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.deguibert.todolist.model.User;
 import com.deguibert.todolist.service.UserService;
@@ -36,14 +37,9 @@ public class RegisterController {
 	 * @return 
 	 */
 	@PostMapping("/process_register")
-	public String processRegister(User user) {
-		if (user != null) {
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			userService.saveUser(user);
-			return "User "+user.getLogin()+" registered";
-		} else {
-			return "Invalid User";
-		}
-		
+	public RedirectView processRegister(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userService.saveUser(user);
+		return new RedirectView("/", true);
 	}
 }

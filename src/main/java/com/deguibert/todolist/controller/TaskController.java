@@ -43,7 +43,7 @@ public class TaskController {
 			modelAndView.getModelMap().addAttribute("title", "Mettre a jour une tache");
 			modelAndView.getModelMap().addAttribute("tags", tagsService.getTags());
 		} else {
-			modelAndView.setView(new RedirectView("/create-task"));
+			modelAndView.setView(new RedirectView("/create-task", true));
 		}
 		return modelAndView;
 	}
@@ -55,12 +55,12 @@ public class TaskController {
 		}
 		task.setUser(userDetail.getUser());
 		taskService.updateTask(task);
-		return new RedirectView("/list");
+		return new RedirectView("/list", true);
 	}
 	
 	@PostMapping("/process_switch_done")
 	public RedirectView processUpdateTask(@AuthenticationPrincipal UserDetailsImpl userDetail, @RequestParam int id) {
 		taskService.switchTaskDone(id);
-		return new RedirectView("/list");
+		return new RedirectView("/list", true);
 	}
 }

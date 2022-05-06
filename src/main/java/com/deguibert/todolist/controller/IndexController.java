@@ -10,6 +10,6 @@ public class IndexController {
 	
 	@GetMapping("/")
 	public RedirectView viewIndex() {
-		return new RedirectView("/list");
+		return new RedirectView("/list", true);
 	}
 }
